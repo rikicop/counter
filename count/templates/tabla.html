@@ -1,0 +1,61 @@
+{% load static  %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="{% static 'count/css/style.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- <script src="script.js"></script> -->
+    <div id="movies-list">
+      <!-- The div element where the movies table will be inserted --> 
+    </div>  
+  </body>
+  <script 
+          src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+          integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+          crossorigin="anonymous">     
+  </script>
+  <!--<script src="{% static 'count/js/demo.js' %}"></script> -->
+  <script>
+     let arr="{{elementos|safe}}" 
+     let str = arr.replace(/'/g, '"')
+     myObject = JSON.parse(str);
+     console.log('Objeto Completo: ', myObject)
+
+    /* let movies = [
+        {
+            title: "Fight Club",
+            rank: 10,
+            id: "tt0137523"
+        },
+        {
+            title: "The Shawshank Redemption",
+            rank: 1,
+            id: "tt0111161"
+        }
+        
+    ]*/
+    let movies =  myObject
+
+    function displayMovies(movies){
+    let table = '<table>';
+    table += '<tr><th>ID</th><th>Name</th><th>Rank</th></tr>';
+    movies.map((movie, index) => {
+        table = table + '<tr>',
+        table = table + '<td>' + 'Title:' + `${movie.cuenta}` + '</td>',
+        table = table + '<td>' + 'Title:' + `${movie.nombre}` + '</td>',
+        table = table + '<td>' + 'Title:' + `${movie.movimiento}` + '</td>'
+    });  
+        table += "</table>"
+        document.getElementById("movies-list").innerHTML = table;
+    }
+
+    displayMovies(movies);
+  </script>
+
+    
+     
+</html>

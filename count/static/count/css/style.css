@@ -1,0 +1,94 @@
+*{
+    box-sizing: border-box;
+    background: beige;
+}
+
+body {
+    font-family: sans-serif;
+    background: beige;
+}
+
+.hijo{
+    border: 0px solid black; 
+    width: 50%;   
+}
+
+input[type="text"], textarea {
+
+    background-color :whitesmoke; 
+  
+}
+/* botones */
+.floated {
+    float:left;
+    text-align: right;
+    margin-left: 60px;
+    background: lightgray;
+ }
+ .reload{
+    float:left;
+    text-align: right;
+    margin-left: 30px;
+    background: lightgray;
+ }
+
+ .eliminar{
+    float:left;
+    margin-top: -19px;
+    text-align: right;
+    margin-left: 30px;
+    background: lightgray;
+ }
+ .maintitle{
+    display: flex;
+    justify-content: center;
+  
+ }
+
+@media (min-width: 1039px) {
+    .parent{
+        display: flex;
+    }
+}
+
+.table-box {
+    width: 500px;
+    height: 400px;
+    overflow-y: scroll;
+    background: #fff;    
+}
+
+table {
+    width: 100%;
+}
+
+table,th,td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: left;
+}
+th {
+    position: sticky;
+    top: 0;
+    background: rgb(126, 124, 124);
+    color: #fff;
+}
+
+tr th:nth-child(1) {
+    width: 60px;
+    text-align: center;
+    background: rgb(143, 142, 142);
+}
+
+tr td:nth-child(1) {
+    background: beige;
+    text-align: center;
+    color: #2b39da
+}
+
+/* FORMULARIO */
+.myform {
+    margin: 0 auto;
+  }
+
+ 

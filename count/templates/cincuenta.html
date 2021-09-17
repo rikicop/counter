@@ -1,0 +1,223 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'count/css/style.css' %}">
+    <title>Document</title>
+    <style>
+      label {
+        display: inline-block;
+        width: 150px;
+        text-align: right;
+      }
+    </style>
+</head>
+<body>
+    <div class="maintitle"><h1>Plan de Cuentas</h1></div>
+    <!--LADO IZQUIERDO -->
+    <div class="parent">
+        
+        <div class="hijo">
+            <br><br>
+            <div class="table-box">
+                <!-- TABLA -->   
+                <table cellpadding="10">  
+                    <tr>
+                        <th>CODIGO</th>
+                        <th>NOMBRE</th>
+                        <th></th>
+                    </tr>
+                    
+                    {% for items in elementos %} 
+                    <tr>
+                        <td>
+                            <input type="text" id="{{items.cuenta}}" 
+                                   value="{{items.cuenta}}" size="3px"
+                            >
+                        </td>
+                        <td>{{items.nombre}}</td>
+                        <td>
+                            <button id="{{items.cuenta}}" onclick="reply_click(this.id)">
+                                Edit
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <!-- Buscar -->
+            <form class="searchForm" action="" method="POST"><br>
+                {% csrf_token %}    
+                <select name="s_buscar">
+                    <option value="nombre" selected>Nombre</option>
+                    <option value="cuenta">Cuenta</option>
+                </select>
+                <input type="text" id="buscar" name="buscar" required/>
+                <br/><br/>
+                <input type="submit" value="Buscar" style="background: lightgray;"/>
+            </form>  
+        </div>
+        <!-- LADO DERECHO -->
+        <div class="hijo">
+            <form name="updateform" class="updateform" action="" method="POST">
+            <br><br>
+                {% csrf_token %}
+                <label>CUENTA:</label> 
+                <input type="text" id="cuenta" name="cuenta" required />
+                <div style="color: firebrick;">{{nuevo}}</div>
+                <div style="color: firebrick; font-weight: 700;">{{cuenta}}</div>
+                <br/><br/>
+                <label>NOMBRE:</label> 
+                <input type="text" id="nombre" name="nombre"/>
+                <br/><br/>
+                <label for="movimiento">MOVIMIENTO:</label>
+                <select id="movimiento" name="movimiento">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+               
+                <label for="nivel">NIVEL:</label>
+                <select id="nivel" name="nivel">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+                <br><br>
+                <label for="moneda">MONEDA:</label>
+                <select id="moneda" name="moneda">
+                    <option value="S">S</option>
+                    <option value="D">D</option>
+                    <option value="P">P</option>
+                </select>
+                <br><br>
+               <!--  ASIENTO AUTO.: <input type="checkbox" id="asiento" name="asiento" value="si"> -->
+               <label for="asiento">ASIENTO AUTO:</label>
+                <select id="asiento" name="asiento">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+                <br><br>
+                <label for="">CTA CARGO:</label>
+                <input type="text" id="cargo" name="cargo"/><br><br>
+                <label for=""> CTA ABONO:</label>
+                <input type="text" id="abono" name="abono"/><br><br>
+                <label for="">COD ANT:</label>
+                <input type="text" id="codant" name="codant"/>
+                <br><br>
+                <label for="oficina">OFICINA:</label>
+                <!--  <select id="oficina" name="oficina">
+                        <option value="001">001</option>
+                        <option value="002">002</option>
+                        <option value="003">003</option>
+                        <option value="004">004</option>
+                      </select> -->
+                <input type="text" id="oficina" name="oficina"/>
+                <br><br>
+                <label for="banco">BANCO:</label>
+                <!--
+                    <select id="banco" name="banco">
+                    <option value="001">001</option>
+                    <option value="002">002</option>
+                    <option value="003">003</option>
+                    <option value="004">004</option>
+                </select> -->
+                <input type="text" id="banco" name="banco"/>
+                <br><br>
+                <label for="proyecto">PROYECTO:</label>
+                <!-- 
+                    <select id="proyecto" name="proyecto">
+                    <option value="001">001</option>
+                    <option value="002">002</option>
+                    <option value="003">003</option>
+                    <option value="004">004</option>
+                </select> -->
+                <input type="text" id="proyecto" name="proyecto"/>
+                <br>
+                <br>
+                <input class="floated" type="submit" value="Guardar"/>
+                
+            </form><button class="reload" onclick="window.location.href=window.location.href">
+                    Recargar
+                   </button>
+            
+            <!-- Borrar Objeto -->
+            <form class="deleteForm" action="" method="POST" onsubmit="return checkDelete();"><br>
+                {% csrf_token %}
+                <div style="color: firebrick;">{{elimi}}</div>
+                
+                <input class="eliminar" type="submit" value="Eliminar"/><br/><br/>
+                <input 
+                    type="text" 
+                    style="opacity: 0;" 
+                    id="bcuenta" 
+                    name="bcuenta"   
+                />
+            </form>
+            <br><br>  
+            <!-- Buscar con JS -->
+            <!-- <input type="text" name="buscar" id="miBuscar">
+            <button type="button" onclick="getInputValue();">Buscar</button> -->
+        </div>  
+    </div>      
+</body>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+<script>
+
+    /* function getInputValue(){ 
+            var inputVal = document.getElementById("miBuscar").value;
+            console.log(inputVal);
+    } */
+
+     let arr="{{elementos|safe}}"
+     /* La variable de arriba me devuelve un String */
+     /* Hay que pasarla a objeto */
+     /* Primero reemplazo la comilla simple */     
+     let str = arr.replace(/'/g, '"')
+     myObject = JSON.parse(str);
+     console.log('Objeto Completo: ', myObject)
+    
+     function reply_click(clicked_id){
+      
+      alert(clicked_id);
+      const result = myObject.find( ({ cuenta }) => cuenta === clicked_id);
+      console.log('Cuenta: ', result.cuenta)
+      console.log('Nombre: ', result.nombre)
+      console.log('Movimiento: ', result.movimiento)
+       
+      document.getElementById("cuenta").setAttribute("value", result.cuenta);
+      document.getElementById("nombre").setAttribute("value", result.nombre);
+     /*  document.getElementById("movimiento").setAttribute("checked", true); */
+      document.getElementById("nivel").setAttribute("checked", true);
+      /* document.getElementById("moneda").setAttribute("select",'p'); */
+      document.getElementById("asiento").setAttribute("checked", true);
+      document.getElementById("cargo").setAttribute("value", result.ctacargo);
+      document.getElementById("abono").setAttribute("value", result.ctaabono);
+      document.getElementById("codant").setAttribute("value", result.codant);
+      document.getElementById("oficina").setAttribute("value", result.oficina);
+      document.getElementById("banco").setAttribute("value", result.banco);
+      document.getElementById("proyecto").setAttribute("value", result.proyecto);
+     
+      /*Indentifica y carga el Input para Borrar Objeto */
+      document.getElementById("bcuenta").setAttribute("value", result.cuenta);
+    
+    }
+  
+    function checkDelete(){
+        x = document.getElementById("cuenta").value;
+        console.log('x: ',x)
+        if (x === ''){
+            alert("El Campo cuenta no lo puedes dejar vacio...")
+            return false;
+        }
+        return true;
+    }
+      
+</script>
+</html>
+
+
