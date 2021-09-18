@@ -9,7 +9,7 @@
   </head>
   <body>
     <!-- <script src="script.js"></script> -->
-    <div id="movies-list">
+    <div id="registros-list">
       <!-- The div element where the movies table will be inserted --> 
     </div>  
   </body>
@@ -22,38 +22,49 @@
   <script>
      let arr="{{elementos|safe}}" 
      let str = arr.replace(/'/g, '"')
+     str = str.replace(/Decimal/g, '')
+     str = str.replace(/\(/g, '')
+     str = str.replace(/\)/g, '')
+     console.log('str: ',str)
+     
+
      myObject = JSON.parse(str);
      console.log('Objeto Completo: ', myObject)
 
-    /* let movies = [
-        {
-            title: "Fight Club",
-            rank: 10,
-            id: "tt0137523"
-        },
-        {
-            title: "The Shawshank Redemption",
-            rank: 1,
-            id: "tt0111161"
-        }
-        
-    ]*/
-    let movies =  myObject
+    
+    let registros =  myObject
 
-    function displayMovies(movies){
+    function displayRegistros(registros){
     let table = '<table>';
     table += '<tr><th>ID</th><th>Name</th><th>Rank</th></tr>';
-    movies.map((movie, index) => {
+    registros.map((registro, index) => {
         table = table + '<tr>',
-        table = table + '<td>' + 'Title:' + `${movie.cuenta}` + '</td>',
-        table = table + '<td>' + 'Title:' + `${movie.nombre}` + '</td>',
-        table = table + '<td>' + 'Title:' + `${movie.movimiento}` + '</td>'
+        table = table + '<td>' + `${registro.cuenta}` + '</td>',
+        table = table + '<td>' +  `${registro.nombre}` + '</td>',
+        table = table + '<td>' + `${registro.price}` + '</td>'
     });  
         table += "</table>"
-        document.getElementById("movies-list").innerHTML = table;
+        document.getElementById("registros-list").innerHTML = table;
     }
 
-    displayMovies(movies);
+    displayRegistros(registros);
+
+     
+  /* sacar los precios del objeto */
+    let arr_str = registros.map((registro, index) => {
+        return registro.price
+    });
+
+    console.log('Resultado: ' , arr_str)
+   
+  // Convertir los str a números
+
+   let arr_numb = arr_str.map(i=>Number(i))
+
+  // Reducer
+  let acumulador= arr_numb.reduce((acc, current)=>acc+current, 0)
+  console.log('Acumulador: ', acumulador)
+
   </script>
 
     
