@@ -34,4 +34,15 @@ class Cincuenta(models.Model):
 
     def __str__(self):
         template = '{0.cuenta} {0.nombre} {0.movimiento} {0.oficina}'
+        return template.format(self)
+
+class Cargo(models.Model):
+    cuenta = models.CharField(max_length=100, primary_key=True)
+    nombre = models.CharField(max_length=50)
+    movimiento = models.CharField(max_length=100,blank=True)
+    price = models.DecimalField(max_digits = 5, decimal_places = 2)
+    
+
+    def __str__(self):
+        template = '{0.cuenta} {0.nombre} {0.movimiento} {0.price}'
         return template.format(self)  

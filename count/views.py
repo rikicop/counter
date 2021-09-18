@@ -188,7 +188,7 @@ def cincuenta(request):
     return render(request, 'home.html', {'elementos':items})
 
 def tabla(request):
-    items = list(Cincuenta.objects.all().values())
+    items = list(Cargo.objects.all().values())
     return render(request, 'tabla.html', {'elementos':items})
     
 
