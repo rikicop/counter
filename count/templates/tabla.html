@@ -9,8 +9,10 @@
   </head>
   <body>
     <!-- <script src="script.js"></script> -->
-    <div id="registros-list">
-      <!-- The div element where the movies table will be inserted --> 
+    <div id="registros-cargo"></div><br><br><br>
+    <div id="registros-cincuenta"></div>
+
+      
     </div>  
   </body>
   <script 
@@ -20,51 +22,72 @@
   </script>
   <!--<script src="{% static 'count/js/demo.js' %}"></script> -->
   <script>
-     let arr="{{elementos|safe}}" 
-     let str = arr.replace(/'/g, '"')
-     str = str.replace(/Decimal/g, '')
-     str = str.replace(/\(/g, '')
-     str = str.replace(/\)/g, '')
-     console.log('str: ',str)
-     
-
-     myObject = JSON.parse(str);
-     console.log('Objeto Completo: ', myObject)
-
+    /* PROCESAMIENTO DE  CARGO */
+    let arrc="{{cargo|safe}}" 
+    console.log("Objeto Cargo En Bruto: ", arrc)
+    let strc = arrc.replace(/'/g, '"')
+    strc = strc.replace(/Decimal/g, '')
+    strc = strc.replace(/\(/g, '')
+    strc = strc.replace(/\)/g, '')
+    console.log('Objeto Cargo Editado: ', strc)
     
-    let registros =  myObject
+    myObjectc = JSON.parse(strc);
+    console.log('Objeto Editado a JSON: ', myObjectc)
 
-    function displayRegistros(registros){
+    function displayCargos(cargos){
     let table = '<table>';
     table += '<tr><th>ID</th><th>Name</th><th>Rank</th></tr>';
-    registros.map((registro, index) => {
+    cargos.map((cargo, index) => {
         table = table + '<tr>',
-        table = table + '<td>' + `${registro.cuenta}` + '</td>',
-        table = table + '<td>' +  `${registro.nombre}` + '</td>',
-        table = table + '<td>' + `${registro.price}` + '</td>'
+        table = table + '<td>' + `${cargo.cuenta}` + '</td>',
+        table = table + '<td>' +  `${cargo.nombre}` + '</td>',
+        table = table + '<td>' + `${cargo.price}` + '</td>'
     });  
         table += "</table>"
-        document.getElementById("registros-list").innerHTML = table;
+        document.getElementById("registros-cargo").innerHTML = table;
+    }
+    displayCargos(myObjectc);
+     
+    /* PROCESAMIENTO DE  CINCUENTA */
+    let arrcin="{{cincuenta|safe}}" 
+    console.log("Objeto Cincuenta En Bruto: ", arrcin)
+    let strcin = arrcin.replace(/'/g, '"')
+    strcin = strcin.replace(/Decimal/g, '')
+    strcin = strcin.replace(/\(/g, '')
+    strcin = strcin.replace(/\)/g, '')
+    console.log('Objeto Cincuenta Editado: ', strcin)
+    
+    myObjectcin = JSON.parse(strcin);
+    console.log('Objeto Cincuenta a JSON: ', myObjectcin)
+
+    function displayCincuenta(cincuenta){
+    let tablec = '<table>';
+    tablec += '<tr><th>ID</th><th>Name</th><th>Rank</th></tr>';
+    cincuenta.map((cin, index) => {
+        tablec = tablec + '<tr>',
+        tablec = tablec + '<td>' + `${cin.cuenta}` + '</td>',
+        tablec = tablec + '<td>' +  `${cin.nombre}` + '</td>',
+        tablec = tablec + '<td>' + `${cin.movimiento}` + '</td>'
+    });  
+        tablec += "</table>"
+        document.getElementById("registros-cincuenta").innerHTML = tablec;
     }
 
-    displayRegistros(registros);
+    //No llamo todavía
+    displayCincuenta(myObjectcin);
 
-     
+
+  /* CÁLCULO */   
   /* sacar los precios del objeto */
-    let arr_str = registros.map((registro, index) => {
-        return registro.price
+   /*  let arr_str = myObjectc.map((cargo, index) => {
+        return cargo.price
     });
-
-    console.log('Resultado: ' , arr_str)
-   
+    console.log('Resultado: ' , arr_str) */
   // Convertir los str a números
-
-   let arr_numb = arr_str.map(i=>Number(i))
-
+   /* let arr_numb = arr_str.map(i=>Number(i)) */
   // Reducer
-  let acumulador= arr_numb.reduce((acc, current)=>acc+current, 0)
-  console.log('Acumulador: ', acumulador)
-
+ /*  let acumulador= arr_numb.reduce((acc, current)=>acc+current, 0)
+  console.log('Acumulador: ', acumulador) */
   </script>
 
     

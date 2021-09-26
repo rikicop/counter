@@ -188,8 +188,11 @@ def cincuenta(request):
     return render(request, 'home.html', {'elementos':items})
 
 def tabla(request):
-    items = list(Cargo.objects.all().values())
-    return render(request, 'tabla.html', {'elementos':items})
+    cargo = list(Cargo.objects.all().values())
+    cincuenta = list(Cincuenta.objects.all().values())
+
+    context = {'cargo':cargo,'cincuenta':cincuenta} 
+    return render(request, 'tabla.html', context)
     
 
 
