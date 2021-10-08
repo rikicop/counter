@@ -37,12 +37,14 @@ class Cincuenta(models.Model):
         return template.format(self)
 
 class Cargo(models.Model):
-    cuenta = models.CharField(max_length=100, primary_key=True)
-    nombre = models.CharField(max_length=50)
+    cuenta_c = models.CharField(max_length=100, primary_key=True)
+    nombre_c = models.CharField(max_length=50)
     movimiento = models.CharField(max_length=100,blank=True)
     price = models.DecimalField(max_digits = 5, decimal_places = 2)
+    cuenta_cin = models.CharField(max_length=100, blank=True)
+    #cinci= models.ForeignKey(Cincuenta, db_column='cuenta',on_delete=models.CASCADE, null=True , blank=True)
     
 
     def __str__(self):
-        template = '{0.cuenta} {0.nombre} {0.movimiento} {0.price}'
+        template = '{0.cuenta_c} {0.nombre_c} {0.movimiento} {0.price}'
         return template.format(self)  

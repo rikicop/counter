@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Transaccion, Cincuenta, Cargo
+import pandas as pd
+import json
 
 def home(request):
     #Validación de que no esté vacio el campo cuenta
@@ -188,10 +190,20 @@ def cincuenta(request):
     return render(request, 'home.html', {'elementos':items})
 
 def tabla(request):
+    #DF TO JSON
+    df= pd.DataFrame(list(Cargo.objects.all().values()))
+
+    print("Esta es la tabla Cargo: ", df)
+
+    json_records = df.reset_index().to_json(orient ='records')
+    dt_j = []
+    dt_j = json.loads(json_records)
+    
+    #FIN DF TO JSON
     cargo = list(Cargo.objects.all().values())
     cincuenta = list(Cincuenta.objects.all().values())
 
-    context = {'cargo':cargo,'cincuenta':cincuenta} 
+    context = {'cargo':cargo,'cincuenta':cincuenta, "json1":dt_j, 'dt_j': dt_j} 
     return render(request, 'tabla.html', context)
     
 

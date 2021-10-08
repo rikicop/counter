@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 Django = "==2.2"
+pandas = "*"
 
 [dev-packages]
 

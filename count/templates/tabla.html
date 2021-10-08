@@ -11,8 +11,34 @@
     <!-- <script src="script.js"></script> -->
     <div id="registros-cargo"></div><br><br><br>
     <div id="registros-cincuenta"></div>
+    <!-- TABLA DIRECTA DE JSON(DE DF) SIN JS  -->
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>NOMBRE</th>
+          <th>APELLIDO</th>
+          <th>ITEMTYPE</th>
+          <th>PRECIO DE VENTA</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- jinja2 Technique -->
+      {% if dt_j %}  
+      {% for i in dt_j %}
+        <tr>
+          <td>{{i.cuenta_c}}</td> 
+          <td>{{i.nombre_c}}</td>      
+          <td>{{i.movimiento}}</td> 
+          <td>{{i.price}}</td> 
+          <td>{{cuenta_cin}}</td>
+        </tr>
+      {% endfor %}
+      {% endif %}
+      </tbody>
+    </table>
 
-      
+
+
     </div>  
   </body>
   <script 
@@ -21,7 +47,17 @@
           crossorigin="anonymous">     
   </script>
   <!--<script src="{% static 'count/js/demo.js' %}"></script> -->
-  <script>
+ 
+ 
+ 
+ <script>
+    /* PROCESAMIENTO DE DF*/
+    let n="{{json1}}"
+    let OutQuotes= n.replace(/(&quot\;)/g,"\"")
+    console.log('QutQ', OutQuotes)
+    let art = JSON.parse(OutQuotes);
+    console.log('art: ',art)
+    
     /* PROCESAMIENTO DE  CARGO */
     let arrc="{{cargo|safe}}" 
     console.log("Objeto Cargo En Bruto: ", arrc)
@@ -36,11 +72,12 @@
 
     function displayCargos(cargos){
     let table = '<table>';
-    table += '<tr><th>ID</th><th>Name</th><th>Rank</th></tr>';
+    table += '<tr><th>CUENTA</th><th>NOMBRE</th><th>CUENTA CIN...</th><th>Más</th></tr>';
     cargos.map((cargo, index) => {
         table = table + '<tr>',
-        table = table + '<td>' + `${cargo.cuenta}` + '</td>',
-        table = table + '<td>' +  `${cargo.nombre}` + '</td>',
+        table = table + '<td>' + `${cargo.cuenta_c}` + '</td>',
+        table = table + '<td>' +  `${cargo.nombre_c}` + '</td>',
+        table = table + '<td>' +  `${cargo.cuenta_cin}` + '</td>',
         table = table + '<td>' + `${cargo.price}` + '</td>'
     });  
         table += "</table>"
@@ -72,22 +109,30 @@
         tablec += "</table>"
         document.getElementById("registros-cincuenta").innerHTML = tablec;
     }
+  
+  
+  displayCincuenta(myObjectcin);
 
-    //No llamo todavía
-    displayCincuenta(myObjectcin);
+   /* TABLA RELACIONAL */
+   /* Los dos jsons   myObjectc y myObjectcin */
+   let newArray = myObjectc.filter((item) =>{
+    /* Aquí podría ser el nombre del profile */ 
+    return item.cuenta_cin === '0123'
+    });
+   console.log("Esto es newArray: ", newArray)
 
 
   /* CÁLCULO */   
   /* sacar los precios del objeto */
-   /*  let arr_str = myObjectc.map((cargo, index) => {
+    let arr_str = myObjectc.map((cargo, index) => {
         return cargo.price
     });
-    console.log('Resultado: ' , arr_str) */
+    console.log('Resultado: ' , arr_str) 
   // Convertir los str a números
-   /* let arr_numb = arr_str.map(i=>Number(i)) */
+    let arr_numb = arr_str.map(i=>Number(i)) 
   // Reducer
- /*  let acumulador= arr_numb.reduce((acc, current)=>acc+current, 0)
-  console.log('Acumulador: ', acumulador) */
+  let acumulador= arr_numb.reduce((acc, current)=>acc+current, 0)
+  console.log('Acumulador: ', acumulador) 
   </script>
 
     
